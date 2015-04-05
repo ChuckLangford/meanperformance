@@ -1,7 +1,7 @@
 (function() {
   'use strict';
   var gulp        = require('gulp');
-  var usemin      = require('gulp-usemin'); //combine files
+  var useref      = require('gulp-useref'); //combine files
   var del         = require('del'); //clean up our build directory
 
   process.env.NODE_ENV = process.env.NODE_ENV || 'development';
@@ -9,10 +9,18 @@
   gulp.task('default', function() {});
 
   gulp.task('build', ['clean'], function() {
-    return gulp.src('./views/index.html')
-      .pipe(usemin({
-        assetsDir: 'public'
-      })) //adds the 'concat' task automatically
+    var assets = useref.assets();
+
+    // In order to keep the directory structure similar to our dev enironment,
+    // we concatenate the script files first
+    gulp.src('./views/*.html')
+    .pipe(assets)
+    .pipe(gulp.dest('build/public'))
+    .pipe(assets.restore());
+
+    // The views are combined and piped here
+    return gulp.src('./views/*.html')
+      .pipe(useref())
       .pipe(gulp.dest('build/views'));
   });
 
