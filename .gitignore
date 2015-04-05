@@ -20,6 +20,7 @@ coverage
 .lock-wscript
 
 # Compiled binary addons (http://nodejs.org/api/addons.html)
+build
 build/Release
 
 # Dependency directory
@@ -27,4 +28,4 @@ build/Release
 node_modules
 
 # VIM
-.swp
+*.swp
