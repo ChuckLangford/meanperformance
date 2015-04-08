@@ -18,9 +18,9 @@ app.set('view engine', 'html');
 //app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public'), {maxAge: 31536000000})); //Note: expressuses milliseconds to set maxAge, browsers display maxAge in seconds
 
 app.use('/', routes);
 app.use('/users', users);
