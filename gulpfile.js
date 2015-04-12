@@ -44,7 +44,9 @@
      .pipe(rev())
      .pipe(gulp.dest('build/public'));
 
+    //clear out the previous work
     assets = useref.assets();
+
     // The views are combined and piped here
     return gulp.src('./views/*.html')
       .pipe(assets) //returns a stream of concatenated asset files from build block
