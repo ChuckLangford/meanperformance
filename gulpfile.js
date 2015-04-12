@@ -33,10 +33,6 @@
     });
   });
 
-  // gulp.task('pre', ['clean'], function() {
-  //
-  // });
-
   /* This is where the actual build happens */
   gulp.task('builder', ['clean'], function(cb) {
     var assets = useref.assets();
