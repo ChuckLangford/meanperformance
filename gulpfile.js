@@ -7,6 +7,7 @@
   var revReplace  = require('gulp-rev-replace'); //re-writes the html file with the rev'd filenames
   var uglify      = require('gulp-uglify');
   var filter      = require('gulp-filter');
+  var ngAnnotate  = require('gulp-ng-annotate');
 
   process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
@@ -49,6 +50,7 @@
     return gulp.src('./views/*.html')
       .pipe(assets) //returns a stream of concatenated asset files from build block
       .pipe(jsFilter)
+      .pipe(ngAnnotate())
       .pipe(uglify())
       .pipe(jsFilter.restore())
       .pipe(rev()) //revision the stream of files
