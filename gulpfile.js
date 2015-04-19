@@ -6,7 +6,7 @@
   var rev         = require('gulp-rev'); //appends content hash; breaks cache
   var revReplace  = require('gulp-rev-replace'); //re-writes the html file with the rev'd filenames
   var uglify      = require('gulp-uglify');
-  var filter      = require('gulp-filter');
+  var filter      = require('gulp-filter'); //filters out a subset of files into the stream
 
   process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
