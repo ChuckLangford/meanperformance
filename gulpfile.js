@@ -6,22 +6,16 @@
 
   process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
-  gulp.task('default', function() {});
+  gulp.task('default', ['build']);
 
-  gulp.task('build', ['clean'], function() {
-    var assets = useref.assets();
+  gulp.task('build', ['builder', 'post'], function() {
+    //we can use this function for any cleanup
+    del(['build/views/javascripts']);
+  });
 
-    // In order to keep the directory structure similar to our dev enironment,
-    // we concatenate the script files first
-    gulp.src('./views/*.html')
-    .pipe(assets)
-    .pipe(gulp.dest('build/public'))
-    .pipe(assets.restore());
-
-    // The views are combined and piped here
-    return gulp.src('./views/*.html')
-      .pipe(useref())
-      .pipe(gulp.dest('build/views'));
+  gulp.task('post', ['builder'], function(cb) {
+    return gulp.src('build/views/javascripts/*.js')
+      .pipe(gulp.dest('build/public/javascripts'));
   });
 
   gulp.task('clean', function(cb) {
@@ -36,5 +30,16 @@
         .pipe(gulp.dest('./build/bin'));
       cb(err);
     });
+  });
+
+  gulp.task('builder', ['clean'], function() {
+    var assets = useref.assets();
+
+    // The views are combined and piped here
+    return gulp.src('./views/*.html')
+      .pipe(assets)
+      .pipe(assets.restore())
+      .pipe(useref())
+      .pipe(gulp.dest('build/views'));
   });
 })();
