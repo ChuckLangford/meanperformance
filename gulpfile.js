@@ -5,14 +5,21 @@
   var del         = require('del'); //clean up our build directory
   var rev         = require('gulp-rev'); //appends content hash; breaks cache
   var revReplace  = require('gulp-rev-replace'); //re-writes the html file with the rev'd filenames
+  var uglify      = require('gulp-uglify');
+  var filter      = require('gulp-filter');
 
   process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
-  gulp.task('default', function() {});
+  gulp.task('default', ['build']);
 
-  gulp.task('build', ['builder'], function() {
+  gulp.task('build', ['builder', 'post'], function() {
     //we can use this function for any cleanup
     del(['build/views/javascripts']);
+  });
+
+  gulp.task('post', ['builder'], function(cb) {
+    return gulp.src('build/views/javascripts/*.js')
+      .pipe(gulp.dest('build/public/javascripts'));
   });
 
   /* The clean function preps the entire build process.
@@ -36,20 +43,14 @@
   /* This is where the actual build happens */
   gulp.task('builder', ['clean'], function(cb) {
     var assets = useref.assets();
-
-    // In order to keep the directory structure similar to our dev enironment,
-    // we concatenate the script files first
-    gulp.src('./views/*.html')
-     .pipe(assets)
-     .pipe(rev())
-     .pipe(gulp.dest('build/public'));
-
-    //clear out the previous work
-    assets = useref.assets();
+    var jsFilter = filter('**/*.js');
 
     // The views are combined and piped here
     return gulp.src('./views/*.html')
       .pipe(assets) //returns a stream of concatenated asset files from build block
+      .pipe(jsFilter)
+      .pipe(uglify())
+      .pipe(jsFilter.restore())
       .pipe(rev()) //revision the stream of files
       .pipe(assets.restore()) //restore the html file to the stream
       .pipe(useref()) //update the html file with the concatenated file(s)
