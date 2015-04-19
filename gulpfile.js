@@ -8,6 +8,7 @@
   var uglify      = require('gulp-uglify');
   var filter      = require('gulp-filter');
   var ngAnnotate  = require('gulp-ng-annotate');
+  var minifyHtml  = require('gulp-minify-html');
 
   process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
@@ -43,6 +44,13 @@
 
   /* This is where the actual build happens */
   gulp.task('builder', ['clean'], function(cb) {
+    var opts = {
+      empty: true,
+      cdata: true,
+      conditionals: true,
+      spare:true,
+      quotes: true
+    };
     var assets = useref.assets();
     var jsFilter = filter('**/*.js');
 
@@ -57,6 +65,7 @@
       .pipe(assets.restore()) //restore the html file to the stream
       .pipe(useref()) //update the html file with the concatenated file(s)
       .pipe(revReplace()) //update again with the revisioned file
+      .pipe(minifyHtml(opts))
       .pipe(gulp.dest('build/views'));
   });
 })();
