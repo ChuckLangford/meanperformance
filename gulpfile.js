@@ -8,11 +8,16 @@
 
   process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
-  gulp.task('default', function() {});
+  gulp.task('default', ['build']);
 
-  gulp.task('build', ['builder'], function() {
+  gulp.task('build', ['builder', 'post'], function() {
     //we can use this function for any cleanup
     del(['build/views/javascripts']);
+  });
+
+  gulp.task('post', ['builder'], function(cb) {
+    return gulp.src('build/views/javascripts/*.js')
+      .pipe(gulp.dest('build/public/javascripts'));
   });
 
   /* The clean function preps the entire build process.
@@ -36,16 +41,6 @@
   /* This is where the actual build happens */
   gulp.task('builder', ['clean'], function(cb) {
     var assets = useref.assets();
-
-    // In order to keep the directory structure similar to our dev enironment,
-    // we concatenate the script files first
-    gulp.src('./views/*.html')
-     .pipe(assets)
-     .pipe(rev())
-     .pipe(gulp.dest('build/public'));
-
-    //clear out the previous work
-    assets = useref.assets();
 
     // The views are combined and piped here
     return gulp.src('./views/*.html')
