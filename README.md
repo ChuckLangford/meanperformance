@@ -1,7 +1,7 @@
 # meanperformance
 ============
 
-This repo is for the internal developer conference at [http://352inc.com](352).  The branches incrementally show how to implement the most basic web performance methodologies using the MEAN stack and were built in the following order:
+This repo is for the internal developer conference at [352](http://352inc.com).  The branches incrementally show how to implement the most basic web performance methodologies using the MEAN stack and were built in the following order:
 
 1. master
 2. useref
@@ -12,7 +12,7 @@ This repo is for the internal developer conference at [http://352inc.com](352). 
 
 ## Installation
 
-Except for master, each branch will need to be setup as follows:
+Except for master, setup each branch as follows:
 
 1.  git checkout -b [branchname] origin/[branchname]
 2.  npm install
