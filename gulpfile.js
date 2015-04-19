@@ -37,9 +37,9 @@
 
     // The views are combined and piped here
     return gulp.src('./views/*.html')
-      .pipe(assets)
-      .pipe(assets.restore())
-      .pipe(useref())
-      .pipe(gulp.dest('build/views'));
+      .pipe(assets) //returns a stream of concatenated asset files (the build block)
+      .pipe(assets.restore()) //restores the html file to the stream
+      .pipe(useref()) //alters the source file
+      .pipe(gulp.dest('build/views')); //publish our altered files
   });
 })();
