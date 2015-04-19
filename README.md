@@ -1,5 +1,4 @@
 # meanperformance
-============
 
 This repo is for the internal developer conference at [352](http://352inc.com).  The branches incrementally show how to implement the most basic web performance methodologies using the MEAN stack and were built in the following order:
 
