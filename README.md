@@ -8,6 +8,7 @@ This repo is for the internal developer conference at [352](http://352inc.com). 
 4. compression
 5. minify
 6. ngannotate
+7. minifyhtml
 
 ## Installation
 
